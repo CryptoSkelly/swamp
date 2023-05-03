@@ -115,7 +115,6 @@
 
                     $gridSquare.append($hoverBox);
                     $grid.append($gridSquare);
-                    console.log('x: '+x+', y: '+y);
                 }
             }
         }
@@ -137,7 +136,7 @@
 
             const timestampDate = new Date(parseInt(data.timestamp) * 1000);
             const timestampString = timestampDate.toLocaleString();
-            $('#timestamp').text('Timestamp: ' + timestampString);
+            $('#timestamp').text('Last Updated: ' + timestampString);
         }
         
         init();
