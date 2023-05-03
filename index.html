@@ -109,9 +109,10 @@
                     });
 
                     // Check if the coordinate is in the JSON data
-                    if (coordinateArray.some(coord => coord[0] == x.toString() && coord[1] == y.toString())) {
+                    if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
                         $gridSquare.addClass('filled');
                     }
+
 
                     $gridSquare.append($hoverBox);
                     $grid.append($gridSquare);
