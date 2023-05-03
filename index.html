@@ -95,7 +95,6 @@
 
         async function init() {
             const coordinates = await readJSONFile('coordinates.json');
-            create
             createGrid(coordinates);
             updateInfo(coordinates.length);
         }
