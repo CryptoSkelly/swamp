@@ -46,8 +46,6 @@
         .grid-square {
             width: 1fr;
             height: 1fr;
-            background-color: white;
-            opacity: 0.7;
             border: 1px solid #3A3B53;
             display: flex;
             align-items: center;
@@ -56,6 +54,8 @@
         }
         .filled {
             /* Add styles for filled squares here */
+            background-color: white;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -82,7 +82,6 @@
 
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
-            console.log(coordinateArray);
             
             for (let y = 0; y < 100; y++) {
                 for (let x = 0; x < 100; x++) {
@@ -98,7 +97,6 @@
 
                     // Check if the coordinate is in the JSON data
                     if (coordinateArray.some(coord => coord[0] == x.toString() && coord[1] == y.toString())) {
-                        console.log('filling square');
                         $gridSquare.addClass('filled');
                     }
 
