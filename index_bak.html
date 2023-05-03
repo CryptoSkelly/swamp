@@ -28,6 +28,7 @@
             display: grid;
             grid-template-columns: repeat(100, 1fr);
             grid-template-rows: repeat(100, 1fr);
+            overflow: hidden;
         }
         .grid-background {
             position: absolute;
@@ -89,13 +90,14 @@
 
         function createGrid(coordinates) {
             const $grid = $('.grid');
-            const gridWidth = $grid.width();
-            const squareSize = (gridWidth - 100) / 100;
+            const squareSize = $grid.width() / 100;
 
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
             for (let y = 0; y < 100; y++) {
+                console.log('y:' + y);
                 for (let x = 0; x < 100; x++) {
+                    console.log('y:' + y);
                     const $gridSquare = $('<div>').addClass('grid-square');
                     const $hoverBox = $('<div>').addClass('hover-box').text(`${x},${y}`);
 
@@ -113,6 +115,7 @@
 
                     $gridSquare.append($hoverBox);
                     $grid.append($gridSquare);
+                    console.log('x: '+x+', y: '+y);
                 }
             }
         }
