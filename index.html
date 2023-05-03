@@ -250,16 +250,17 @@
         function toggleView(view) {
             if (view === 'grid') {
                 $('.grid').removeClass('hidden');
-                $('.undiscovered-coordinates-list').addClass('hidden');
+                $('.list-view').addClass('hidden');
                 $('.grid-view-link').addClass('active');
                 $('.list-view-link').removeClass('active');
             } else {
                 $('.grid').addClass('hidden');
-                $('.undiscovered-coordinates-list').removeClass('hidden');
+                $('.list-view').removeClass('hidden');
                 $('.grid-view-link').removeClass('active');
                 $('.list-view-link').addClass('active');
             }
         }
+
 
         // Add event listeners for navigation links
         $('.grid-view-link').on('click', () => toggleView('grid'));
