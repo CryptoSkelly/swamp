@@ -106,13 +106,40 @@
         .undiscovered-coordinates-list li {
             color: #66CD00;
         }
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
+        .nav-link {
+            text-decoration: none;
+            color: #66CD00;
+            margin: 0 10px;
+            cursor: pointer;
+        }
 
+        .nav-link:hover {
+            text-decoration: underline;
+        }
 
+        .nav-link.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        /* Add styles for hiding and showing the content */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <h1>Swamp Souls (slightly delayed) Live X-Ray Map</h1>
+    <nav class="nav">
+        <a class="nav-link active" id="grid-view-link">Grid View</a>
+        <a class="nav-link" id="list-view-link">List of Points</a>
+    </nav>
     <h3>
         <span id="total-grid-spaces">Total Grid Spaces: 10,000</span>
         <span id="found-grid-spaces"></span>
@@ -124,10 +151,14 @@
         <span id="refresh-timer"></span>
     </h3>
     <button class="refresh-button" onclick="location.reload();">Refresh</button>
-    <div class="grid">
-        <div class="grid-background"></div>
+    <div id="grid-view">
+        <div class="grid">
+            <div class="grid-background"></div>
+        </div>
     </div>
-    <div class="undiscovered-coordinates-list"></div>
+    <div id="list-view" class="hidden">
+        <div class="undiscovered-coordinates-list"></div>
+    </div>
     <script>
         async function readJSONFile(url) {
             const response = await fetch(url);
@@ -218,6 +249,24 @@
         function refreshPage() {
             location.reload();
         }
+        function toggleView(view) {
+            if (view === 'grid') {
+                $('#grid-view').removeClass('hidden');
+                $('#list-view').addClass('hidden');
+                $('#grid-view-link').addClass('active');
+                $('#list-view-link').removeClass('active');
+            } else {
+                $('#grid-view').addClass('hidden');
+                $('#list-view').removeClass('hidden');
+                $('#grid-view-link').removeClass('active');
+                $('#list-view-link').addClass('active');
+            }
+        }
+
+        // Add event listeners for navigation links
+        $('#grid-view-link').on('click', () => toggleView('grid'));
+        $('#list-view-link').on('click', () => toggleView('list'));
+        
 
         init();
 
