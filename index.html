@@ -158,7 +158,28 @@
             $('#timestamp').text('Last Updated: ' + timestampString);
         }
         
+        function startRefreshTimer() {
+            let timeLeft = 60; // Refresh time in seconds
+            const timerElement = document.getElementById('refresh-timer');
+
+            function updateTimer() {
+                timerElement.textContent = 'Refreshing in ' + timeLeft + ' seconds';
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    location.reload(); // Refresh the page
+                }
+            }
+
+            const timerInterval = setInterval(updateTimer, 1000); // Call the updateTimer function every 1000 milliseconds (1 second)
+            updateTimer(); // Call the updateTimer function initially to display the initial time
+        }
+        
         init();
+
+        startRefreshTimer();
+
     </script>
     <footer style="margin-top: 20px; font-size: 1.2em; color: #fff;">
         Created with ❤️ by <a href="https://etherscan.io/address/skelly.eth" target="_blank" style="color: #fff; text-decoration: none;">skelly.eth</a>
