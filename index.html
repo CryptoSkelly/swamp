@@ -81,6 +81,10 @@
             position: relative;
         }
 
+        .notes {
+            color:rgba(221, 16, 194, 0.8)
+        }
+
     </style>
 </head>
 <body>
@@ -92,6 +96,7 @@
     </h3>
     <h3>
         <span id="timestamp"></span>
+        <span id="notes">White Spaces are already discovered</span>
         <span id="refresh-timer"></span>
     </h3>
     <div class="grid">
@@ -157,7 +162,7 @@
             const timestampString = timestampDate.toLocaleString();
             $('#timestamp').text('Last Updated: ' + timestampString);
         }
-        
+
         function startRefreshTimer() {
             let timeLeft = 60; // Refresh time in seconds
             const timerElement = document.getElementById('refresh-timer');
