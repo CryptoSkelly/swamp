@@ -130,9 +130,11 @@
         }
 
         async function init() {
-            const coordinates = await readJSONFile('coordinates.json');
+            const data = await readJSONFile('coordinates.json');
+            const coordinates = data.coordinates;
             createGrid(coordinates);
             updateInfo(coordinates.length);
+
             const timestampDate = new Date(parseInt(data.timestamp) * 1000);
             const timestampString = timestampDate.toLocaleString();
             $('#timestamp').text('Timestamp: ' + timestampString);
