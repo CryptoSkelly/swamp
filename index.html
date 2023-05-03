@@ -133,6 +133,7 @@
             const data = await readJSONFile('coordinates.json');
             const coordinates = data.coordinates;
             createGrid(coordinates);
+            console.log(coordinates);
             updateInfo(coordinates.length);
 
             const timestampDate = new Date(parseInt(data.timestamp) * 1000);
