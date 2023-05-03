@@ -151,12 +151,10 @@
         <span id="refresh-timer"></span>
     </h3>
     <button class="refresh-button" onclick="location.reload();">Refresh</button>
-    <div id="grid-view">
-        <div class="grid">
+    <div class="grid">
             <div class="grid-background"></div>
-        </div>
     </div>
-    <div id="list-view" class="hidden">
+    <div class="hidden list-view">
         <div class="undiscovered-coordinates-list"></div>
     </div>
     <script>
@@ -251,21 +249,22 @@
         }
         function toggleView(view) {
             if (view === 'grid') {
-                $('#grid-view').removeClass('hidden');
-                $('#list-view').addClass('hidden');
-                $('#grid-view-link').addClass('active');
-                $('#list-view-link').removeClass('active');
+                $('.grid').removeClass('hidden');
+                $('.undiscovered-coordinates-list').addClass('hidden');
+                $('.grid-view-link').addClass('active');
+                $('.list-view-link').removeClass('active');
             } else {
-                $('#grid-view').addClass('hidden');
-                $('#list-view').removeClass('hidden');
-                $('#grid-view-link').removeClass('active');
-                $('#list-view-link').addClass('active');
+                $('.grid').addClass('hidden');
+                $('.undiscovered-coordinates-list').removeClass('hidden');
+                $('.grid-view-link').removeClass('active');
+                $('.list-view-link').addClass('active');
             }
         }
 
         // Add event listeners for navigation links
-        $('#grid-view-link').on('click', () => toggleView('grid'));
-        $('#list-view-link').on('click', () => toggleView('list'));
+        $('.grid-view-link').on('click', () => toggleView('grid'));
+        $('.list-view-link').on('click', () => toggleView('list'));
+
         
 
         init();
