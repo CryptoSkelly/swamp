@@ -69,6 +69,11 @@
             background-color: white;
             opacity: 0.7;
         }
+        .empty {
+            /* Add styles for filled squares here */
+            background-color: white;
+            opacity: 0.1;
+        }
     </style>
 </head>
 <body>
@@ -91,7 +96,7 @@
 
         function createGrid(coordinates) {
             const $grid = $('.grid');
-            const squareSize = ($grid.width() / 100) - 2;
+            const squareSize = ($grid.width() / 100) - 3;
 
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
@@ -100,7 +105,7 @@
                 for (let x = 0; x < 100; x++) {
                     console.log('y:' + y);
                     const $gridSquare = $('<div>').addClass('grid-square');
-                    const $hoverBox = $('<div>').addClass('hover-box').text(`${x},${y}`);
+                    const $hoverBox = $('<div>').addClass('hover-box').text(`${y},${x}`);
 
                     $gridSquare.css({
                         'grid-row-start': y + 1,
@@ -112,10 +117,9 @@
                     // Check if the coordinate is in the JSON data
                     if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
                         $gridSquare.addClass('filled');
+                    } else {
+                        $gridSquare.append($hoverBox);
                     }
-
-
-                    $gridSquare.append($hoverBox);
                     $grid.append($gridSquare);
                 }
             }
