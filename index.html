@@ -45,7 +45,7 @@
         .grid-square {
             width: 1fr;
             height: 1fr;
-            border: 0px solid #c0ffcd;
+            border: 1px solid #cecece;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -90,7 +90,7 @@
 
         function createGrid(coordinates) {
             const $grid = $('.grid');
-            const squareSize = $grid.width() / 100 - 2; // subtract 1 to account for the border
+            const squareSize = $grid.width() / 100;
 
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
@@ -104,8 +104,8 @@
                     $gridSquare.css({
                         'grid-row-start': y + 1,
                         'grid-column-start': x + 1,
-                        'width': squareSize + 'px',
-                        'height': squareSize + 'px'
+                        'width': squareSize - 2 + 'px',
+                        'height': squareSize - 2 + 'px'
                     });
 
                     // Check if the coordinate is in the JSON data
