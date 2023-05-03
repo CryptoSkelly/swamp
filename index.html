@@ -55,14 +55,11 @@
             display: block;
         }
         .filled {
-            /* Add styles for filled squares here */
-            background-color: white;
-            opacity: 0.5;
+            background-color: black;
+            opacity: 0.7;
         }
         .empty {
-            /* Add styles for filled squares here */
-            background-color: white;
-            opacity: 0.1;
+            background-color: #66CD00;
         }
 
         .hover-box {
@@ -85,10 +82,33 @@
             color:rgba(221, 16, 194, 0.8)
         }
 
+        .refresh-button {
+            background-color: #66CD00;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .undiscovered-list {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+            max-width: 960px;
+            text-align: center;
+        }
+
+        .undiscovered-list li {
+            display: inline-block;
+            padding: 0 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>Swamp Souls Live X-Ray Map</h1>
+    <h1>Swamp Souls (slightly delayed) Live X-Ray Map</h1>
     <h3>
         <span id="total-grid-spaces">Total Grid Spaces: 10,000</span>
         <span id="found-grid-spaces"></span>
@@ -96,59 +116,27 @@
     </h3>
     <h3>
         <span id="timestamp"></span>
-        <span id="notes" class="notes">White Spaces have already been discovered.</span>
+        <span id="notes"><span class="notes">Green Spaces</span> are yet to be discovered.</span>
         <span id="refresh-timer"></span>
     </h3>
+    <button class="refresh-button" onclick="location.reload();">Refresh</button>
     <div class="grid">
         <div class="grid-background"></div>
     </div>
+    <ul id="undiscovered-list" class="undiscovered-list"></ul>
     <script>
-        async function readJSONFile(url) {
-            const response = await fetch(url);
-            const jsonData = await response.json();
-            return jsonData;
-        }
+        // ... (the rest of the script from the previous code snippet)
 
-        function createGrid(coordinates) {
-            const $grid = $('.grid');
-            const squareSize = ($grid.width() / 100) - 2;
-
-            // Create a 2D array to easily check if a coordinate is in the JSON data
-            const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
+        function createUndiscoveredList(coordinates) {
+            const undiscoveredList = $('#undiscovered-list');
             for (let y = 0; y < 100; y++) {
                 for (let x = 0; x < 100; x++) {
-                    const $gridItem = $('<div>').addClass('grid-item');
-                    const $gridSquare = $('<div>').addClass('grid-square');
-                    const $hoverBox = $('<div>').addClass('hover-box').text(`${y},${x}`);
-
-                    $gridSquare.css({
-                        'grid-row-start': y + 1,
-                        'grid-column-start': x + 1,
-                        'width': squareSize + 'px',
-                        'height': squareSize + 'px'
-                    });
-
-                    // Check if the coordinate is in the JSON data
-                    if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
-                        $gridSquare.addClass('filled');
-                    } else {
-                        $gridSquare.addClass('empty');
+                    if (!coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
+                        const listItem = $('<li>').text(`${x},${y}`);
+                        undiscoveredList.append(listItem);
                     }
-
-                    $gridItem.append($gridSquare);
-                    $gridItem.append($hoverBox);
-                    $grid.append($gridItem);
                 }
             }
-        }
-
-        function updateInfo(found) {
-            const totalGridSpaces = $('#total-grid-spaces');
-            const foundGridSpaces = $('#found-grid-spaces');
-            const discoveredPercentage = $('#discovered-percentage');
-
-            foundGridSpaces.text('Found Grid Spaces: ' + found);
-            discoveredPercentage.text('Map Completion: '+((found / 10000) * 100).toFixed(2) + '%');
         }
 
         async function init() {
@@ -161,30 +149,11 @@
             const timestampDate = new Date(parseInt(data.timestamp) * 1000);
             const timestampString = timestampDate.toLocaleString();
             $('#timestamp').text('Last Updated: ' + timestampString);
+
+            createUndiscoveredList(coordinates);
         }
 
-        function startRefreshTimer() {
-            let timeLeft = 60; // Refresh time in seconds
-            const timerElement = document.getElementById('refresh-timer');
-
-            function updateTimer() {
-                timerElement.textContent = 'Refreshing in ' + timeLeft + ' seconds';
-                timeLeft--;
-
-                if (timeLeft < 0) {
-                    clearInterval(timerInterval);
-                    location.reload(); // Refresh the page
-                }
-            }
-
-            const timerInterval = setInterval(updateTimer, 1000); // Call the updateTimer function every 1000 milliseconds (1 second)
-            updateTimer(); // Call the updateTimer function initially to display the initial time
-        }
-        
         init();
-
-        startRefreshTimer();
-
     </script>
     <footer style="margin-top: 20px; font-size: 1.2em; color: #fff;">
         Created with ❤️ by <a href="https://etherscan.io/address/skelly.eth" target="_blank" style="color: #fff; text-decoration: none;">skelly.eth</a>
