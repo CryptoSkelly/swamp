@@ -118,6 +118,7 @@
                     if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
                         $gridSquare.addClass('filled');
                     } else {
+                        $gridSquare.addClass('empty');
                         $gridSquare.append($hoverBox);
                     }
                     $grid.append($gridSquare);
