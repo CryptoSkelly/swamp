@@ -24,11 +24,12 @@
         .grid {
             position: relative;
             width: 75%;
-            padding-bottom: 75%; /* 1:1 aspect ratio */
+            height: 75%;
             display: grid;
+            grid-template-columns: repeat(100, 1fr);
+            grid-template-rows: repeat(100, 1fr);
             overflow: hidden;
         }
-
         .grid-background {
             position: absolute;
             top: 0;
@@ -43,15 +44,23 @@
             max-height: 1920px;
         }
         .grid-square {
-            width: 100%;
-            height: 100%;
+            width: 1fr;
+            height: 1fr;
             background-color: white;
             opacity: 0.7;
             border: 1px solid #3A3B53;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+        .filled {
+            /* Add styles for filled squares here */
         }
     </style>
 </head>
 <body>
+    <h1>Swamp Souls Live X-Ray Map</h1>
     <h3>
         <span id="total-grid-spaces">Total Grid Spaces: 10,000</span>
         <span id="found-grid-spaces"></span>
@@ -69,20 +78,33 @@
 
         function createGrid(coordinates) {
             const $grid = $('.grid');
-            const squareSize = $grid.width() / 100; // get the width of the grid and divide by the number of columns to get the width (and height) of a square
+            const squareSize = $grid.width() / 100 - 1; // subtract 1 to account for the border
 
-            coordinates.forEach(coord => {
-                const $gridSquare = $('<div>').addClass('grid-square');
-                $gridSquare.css({
-                    'grid-row-start': parseInt(coord.y) + 1,
-                    'grid-column-start': parseInt(coord.x) + 1,
-                    'height': squareSize + 'px', // set the height of the square equal to its width
-                    'width': squareSize + 'px' // set the width of the square
-                });
-                $grid.append($gridSquare);
-            });
+            // Create a 2D array to easily check if a coordinate is in the JSON data
+            const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
+            
+            for (let y = 0; y < 100; y++) {
+                for (let x = 0; x < 100; x++) {
+                    const $gridSquare = $('<div>').addClass('grid-square');
+                    const $label = $('<span>').text(`${x},${y}`);
+
+                    $gridSquare.css({
+                        'grid-row-start': y + 1,
+                        'grid-column-start': x + 1,
+                        'width': squareSize + 'px',
+                        'height': squareSize + 'px'
+                    });
+
+                    // Check if the coordinate is in the JSON data
+                    if (coordinateArray.some(coord => coord[0] === x && coord[1] === y)) {
+                        $gridSquare.addClass('filled');
+                    }
+
+                    $gridSquare.append($label);
+                    $grid.append($gridSquare);
+                }
+            }
         }
-
 
         function updateInfo(found) {
             const totalGridSpaces = $('#total-grid-spaces');
@@ -90,7 +112,7 @@
             const discoveredPercentage = $('#discovered-percentage');
 
             foundGridSpaces.text('Found Grid Spaces: ' + found);
-            discoveredPercentage.text(((found / 10000) * 100).toFixed(2) + '%');
+            discoveredPercentage.text('Map Completion'+((found / 10000) * 100).toFixed(2) + '%');
         }
 
         async function init() {
@@ -99,8 +121,10 @@
             updateInfo(coordinates.length);
         }
         
-        // Wait for the DOM to load before calling init
-        $(document).ready(init);
+        init();
     </script>
+    <footer style="margin-top: 20px; font-size: 1.2em; color: #fff;">
+        Created with ❤️ by <a href="https://etherscan.io/address/skelly.eth" target="_blank" style="color: #fff; text-decoration: none;">skelly.eth</a>
+    </footer>    
 </body>
 </html>
