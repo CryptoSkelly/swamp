@@ -125,18 +125,52 @@
     </div>
     <ul id="undiscovered-list" class="undiscovered-list"></ul>
     <script>
-        // ... (the rest of the script from the previous code snippet)
+        async function readJSONFile(url) {
+            const response = await fetch(url);
+            const jsonData = await response.json();
+            return jsonData;
+        }
 
-        function createUndiscoveredList(coordinates) {
-            const undiscoveredList = $('#undiscovered-list');
+        function createGrid(coordinates) {
+            const $grid = $('.grid');
+            const squareSize = ($grid.width() / 100) - 2;
+
+            // Create a 2D array to easily check if a coordinate is in the JSON data
+            const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
             for (let y = 0; y < 100; y++) {
                 for (let x = 0; x < 100; x++) {
-                    if (!coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
-                        const listItem = $('<li>').text(`${x},${y}`);
-                        undiscoveredList.append(listItem);
+                    const $gridItem = $('<div>').addClass('grid-item');
+                    const $gridSquare = $('<div>').addClass('grid-square');
+                    const $hoverBox = $('<div>').addClass('hover-box').text(`${y},${x}`);
+
+                    $gridSquare.css({
+                        'grid-row-start': y + 1,
+                        'grid-column-start': x + 1,
+                        'width': squareSize + 'px',
+                        'height': squareSize + 'px'
+                    });
+
+                    // Check if the coordinate is in the JSON data
+                    if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
+                        $gridSquare.addClass('filled');
+                    } else {
+                        $gridSquare.addClass('empty');
                     }
+
+                    $gridItem.append($gridSquare);
+                    $gridItem.append($hoverBox);
+                    $grid.append($gridItem);
                 }
             }
+        }
+
+        function updateInfo(found) {
+            const totalGridSpaces = $('#total-grid-spaces');
+            const foundGridSpaces = $('#found-grid-spaces');
+            const discoveredPercentage = $('#discovered-percentage');
+
+            foundGridSpaces.text('Found Grid Spaces: ' + found);
+            discoveredPercentage.text('Map Completion: '+((found / 10000) * 100).toFixed(2) + '%');
         }
 
         async function init() {
@@ -149,14 +183,19 @@
             const timestampDate = new Date(parseInt(data.timestamp) * 1000);
             const timestampString = timestampDate.toLocaleString();
             $('#timestamp').text('Last Updated: ' + timestampString);
+        }
 
-            createUndiscoveredList(coordinates);
+        function refreshPage() {
+            location.reload();
         }
 
         init();
+
+        $("#refresh-button").on("click", refreshPage);
     </script>
     <footer style="margin-top: 20px; font-size: 1.2em; color: #fff;">
         Created with ❤️ by <a href="https://etherscan.io/address/skelly.eth" target="_blank" style="color: #fff; text-decoration: none;">skelly.eth</a>
     </footer>    
 </body>
 </html>
+
