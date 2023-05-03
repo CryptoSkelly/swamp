@@ -93,9 +93,23 @@
             const coordinates = await readJSONFile('coordinates.json');
             createGrid(coordinates);
             updateInfo(coordinates.length);
+
+            // Dynamically adjust the grid
+            const $grid = $('.grid');
+            const gridWidth = $grid.width();
+            const gridHeight = $grid.height();
+            const columnSize = gridWidth / 100;
+            const rowSize = gridHeight / 100;
+
+            // Apply grid-template-columns and grid-template-rows dynamically
+            $grid.css({
+                'grid-template-columns': `repeat(100, ${columnSize}px)`,
+                'grid-template-rows': `repeat(100, ${rowSize}px)`
+            });
         }
         
-        init();
+        // Wait for the DOM to load before calling init
+        $(document).ready(init);
     </script>
 </body>
 </html>
