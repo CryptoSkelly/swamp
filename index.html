@@ -96,8 +96,8 @@
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
             
-            for (let x = 0; x < 100; x++) {
-                for (let y = 0; y < 100; y++) {
+            for (let y = 0; y < 100; y++) {
+                for (let x = 0; x < 100; x++) {
                     const $gridSquare = $('<div>').addClass('grid-square');
                     const $hoverBox = $('<div>').addClass('hover-box').text(`${x},${y}`);
 
@@ -125,7 +125,7 @@
             const discoveredPercentage = $('#discovered-percentage');
 
             foundGridSpaces.text('Found Grid Spaces: ' + found);
-            discoveredPercentage.text('Map Completion'+((found / 10000) * 100).toFixed(2) + '%');
+            discoveredPercentage.text('Map Completion: '+((found / 10000) * 100).toFixed(2) + '%');
         }
 
         async function init() {
