@@ -76,6 +76,11 @@
             font-size: 0.8em;
             z-index: 10;
         }
+
+        .grid-item {
+            position: relative;
+        }
+
     </style>
 </head>
 <body>
@@ -103,9 +108,8 @@
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
             for (let y = 0; y < 100; y++) {
-                console.log('y:' + y);
                 for (let x = 0; x < 100; x++) {
-                    console.log('y:' + y);
+                    const $gridItem = $('<div>').addClass('grid-item');
                     const $gridSquare = $('<div>').addClass('grid-square');
                     const $hoverBox = $('<div>').addClass('hover-box').text(`${y},${x}`);
 
@@ -119,12 +123,13 @@
                     // Check if the coordinate is in the JSON data
                     if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
                         $gridSquare.addClass('filled');
-                        $gridSquare.append($hoverBox);
                     } else {
                         $gridSquare.addClass('empty');
-                        $gridSquare.append($hoverBox);
                     }
-                    $grid.append($gridSquare);
+
+                    $gridItem.append($gridSquare);
+                    $gridItem.append($hoverBox);
+                    $grid.append($gridItem);
                 }
             }
         }
