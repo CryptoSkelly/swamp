@@ -69,20 +69,20 @@
 
         function createGrid(coordinates) {
             const $grid = $('.grid');
-
-            // Dynamically set the grid layout
-            $grid.css({
-                'grid-template-columns': `repeat(100, 1fr)`,
-                'grid-template-rows': `repeat(100, 1fr)`
-            });
+            const squareSize = $grid.width() / 100; // get the width of the grid and divide by the number of columns to get the width (and height) of a square
 
             coordinates.forEach(coord => {
                 const $gridSquare = $('<div>').addClass('grid-square');
-                $gridSquare.css('grid-row-start', parseInt(coord.y) + 1);
-                $gridSquare.css('grid-column-start', parseInt(coord.x) + 1);
+                $gridSquare.css({
+                    'grid-row-start': parseInt(coord.y) + 1,
+                    'grid-column-start': parseInt(coord.x) + 1,
+                    'height': squareSize + 'px', // set the height of the square equal to its width
+                    'width': squareSize + 'px' // set the width of the square
+                });
                 $grid.append($gridSquare);
             });
         }
+
 
         function updateInfo(found) {
             const totalGridSpaces = $('#total-grid-spaces');
