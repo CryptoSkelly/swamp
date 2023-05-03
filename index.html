@@ -93,18 +93,22 @@
             margin-bottom: 20px;
         }
 
-        .undiscovered-list {
-            list-style-type: none;
-            padding: 0;
-            margin-bottom: 20px;
-            max-width: 960px;
-            text-align: center;
+        .undiscovered-coordinates-list {
+            margin-top: 20px;
+            text-align: left;
         }
 
-        .undiscovered-list li {
-            display: inline-block;
-            padding: 0 5px;
+        .undiscovered-coordinates-list ul {
+            list-style-type: none;
+            padding: 0;
         }
+
+        .undiscovered-coordinates-list li {
+            color: #66CD00;
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -123,7 +127,7 @@
     <div class="grid">
         <div class="grid-background"></div>
     </div>
-    <ul id="undiscovered-list" class="undiscovered-list"></ul>
+    <div class="undiscovered-coordinates-list"></div>
     <script>
         async function readJSONFile(url) {
             const response = await fetch(url);
