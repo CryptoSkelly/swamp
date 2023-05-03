@@ -133,7 +133,9 @@
             const coordinates = await readJSONFile('coordinates.json');
             createGrid(coordinates);
             updateInfo(coordinates.length);
-            $('#timestamp').text('Timestamp: ' + data.timestamp);
+            const timestampDate = new Date(parseInt(data.timestamp) * 1000);
+            const timestampString = timestampDate.toLocaleString();
+            $('#timestamp').text('Timestamp: ' + timestampString);
         }
         
         init();
