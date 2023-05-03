@@ -117,6 +117,7 @@
                     // Check if the coordinate is in the JSON data
                     if (coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
                         $gridSquare.addClass('filled');
+                        $gridSquare.append($hoverBox);
                     } else {
                         $gridSquare.addClass('empty');
                         $gridSquare.append($hoverBox);
