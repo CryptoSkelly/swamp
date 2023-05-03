@@ -91,7 +91,7 @@
 
         function createGrid(coordinates) {
             const $grid = $('.grid');
-            const squareSize = $grid.width() / 100;
+            const squareSize = ($grid.width() / 100) - 2;
 
             // Create a 2D array to easily check if a coordinate is in the JSON data
             const coordinateArray = coordinates.map(coord => [coord.x, coord.y]);
