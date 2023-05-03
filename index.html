@@ -178,15 +178,20 @@
                 }
             }
 
-            // Create the list of undiscovered coordinates
-            const $undiscoveredList = $('<ul>');
+            // Add the h3 title
+            const $title = $('<h3>').text('Undiscovered Map Squares');
+            $('#undiscovered-coordinates-list').append($title);
+
+            // Create the list of undiscovered coordinates in columns
+            const $undiscoveredList = $('<ul>').css({ 'display': 'flex', 'flex-wrap': 'wrap' });
             undiscoveredCoordinates.forEach(coord => {
-                const $listItem = $('<li>').text(`${coord.x},${coord.y}`);
+                const $listItem = $('<li>').text(`${coord.x},${coord.y}`).css({ 'width': '25%', 'list-style-type': 'none' });
                 $undiscoveredList.append($listItem);
             });
 
-            $('.undiscovered-coordinates-list').append($undiscoveredList);
+            $('#undiscovered-coordinates-list').append($undiscoveredList);
         }
+
 
 
         function updateInfo(found) {
