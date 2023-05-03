@@ -166,7 +166,28 @@
                     $grid.append($gridItem);
                 }
             }
+
+            const undiscoveredCoordinates = [];
+
+            // Find undiscovered coordinates
+            for (let y = 0; y < 100; y++) {
+                for (let x = 0; x < 100; x++) {
+                    if (!coordinates.some(coord => coord.x == x.toString() && coord.y == y.toString())) {
+                        undiscoveredCoordinates.push({ x, y });
+                    }
+                }
+            }
+
+            // Create the list of undiscovered coordinates
+            const $undiscoveredList = $('<ul>');
+            undiscoveredCoordinates.forEach(coord => {
+                const $listItem = $('<li>').text(`${coord.x},${coord.y}`);
+                $undiscoveredList.append($listItem);
+            });
+
+            $('#undiscovered-coordinates-list').append($undiscoveredList);
         }
+
 
         function updateInfo(found) {
             const totalGridSpaces = $('#total-grid-spaces');
